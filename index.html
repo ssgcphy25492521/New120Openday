@@ -42,58 +42,57 @@
             font-size: 16px;
             font-weight: bold;
             color: var(--dark-blue);
-            margin: 15px 0 10px 0;
+            margin: 5px 0 15px 0;
             background: #ffffff;
             padding: 8px 18px;
             border-radius: 20px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+        
+        /* 11 columns x 5 rows grid to form "120" */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            width: 100%;
-            max-width: 420px;
+            grid-template-columns: repeat(11, 24px);
+            grid-template-rows: repeat(5, 24px);
+            gap: 6px;
             margin-top: 10px;
+            justify-content: center;
         }
-        @media(min-width: 480px) {
+        @media(min-width: 400px) {
             .grid-container {
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: repeat(11, 28px);
+                grid-template-rows: repeat(5, 28px);
+                gap: 8px;
             }
         }
+
         .stamp-box {
             background: var(--dark-blue);
-            border-radius: 12px;
-            aspect-ratio: 1 / 1;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px dashed #88aacc;
-            position: relative;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
-            transition: all 0.3s ease;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 14px;
         }
-        .stamp-number {
-            color: #88aacc;
-            font-size: 20px;
-            font-weight: bold;
+        @media(min-width: 400px) {
+            .stamp-box { font-size: 17px; }
         }
-        .stamp-emoji {
-            display: none;
-            font-size: 38px;
-        }
+
+        /* Styling for boxes that get filled by the user */
         .stamp-box.unlocked {
-            border-style: solid;
             background: linear-gradient(135deg, #ffe875, var(--gold));
-            border-color: #d4af37;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+            transform: scale(1.05);
         }
-        .stamp-box.unlocked .stamp-number {
-            display: none;
+
+        /* Styling for the 3 pre-filled boxes */
+        .stamp-box.prefilled {
+            background: linear-gradient(135deg, #ffb347, #ff7b00);
+            box-shadow: 0 0 10px rgba(255, 123, 0, 0.6);
         }
-        .stamp-box.unlocked .stamp-emoji {
-            display: block;
-        }
+
         .congratulations {
             background: #d4edda;
             color: #155724;
@@ -135,7 +134,7 @@
             background-color: #218838;
         }
 
-        /* Custom Modal Styles */
+        /* Modal Styles */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -167,22 +166,15 @@
             justify-content: space-around;
             gap: 10px;
         }
-        .btn-cancel {
-            background-color: #6c757d;
+        .btn-cancel, .btn-confirm {
             color: white;
             border: none;
             padding: 8px 16px;
             border-radius: 6px;
             cursor: pointer;
         }
-        .btn-confirm {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
+        .btn-cancel { background-color: #6c757d; }
+        .btn-confirm { background-color: #dc3545; }
     </style>
 </head>
 <body>
@@ -196,28 +188,50 @@
     </div>
 
     <div class="progress-counter" id="progress-text">
-        Stamps Collected 印花進度: 0 / 12
+        Stamps Collected 印花進度: 0 / 23
     </div>
 
     <div id="congrats-banner" class="congratulations">
-        🎉🎉 Congratulations! You have collected 12 stamps! Please proceed to Rooms M009 / M010 in the June Li Building to redeem your souvenirs.<br><br>
-        恭喜您！您已集齊12個印花！請前往李余愛喜大樓 M009/M010 室領取紀念品。🎉🎉
+        🎉🎉 Congratulations! You have collected 23 stamps! Please proceed to Rooms M009 / M010 in the June Li Building to redeem your souvenirs.<br><br>
+        恭喜您！您已集齊23個印花！請前往李余愛喜大樓 M009/M010 室領取紀念品。🎉🎉
     </div>
 
-    <!-- Exactly 12 Stamp Boxes -->
+    <!-- 28 Grid Boxes arranged in 11 columns, 5 rows to spell "120" -->
+    <!-- Grid areas are plotted as: row-start / col-start / row-end / col-end -->
     <div class="grid-container">
-        <div class="stamp-box" id="box-1"><span class="stamp-number">1</span><span class="stamp-emoji">💮</span></div>
-        <div class="stamp-box" id="box-2"><span class="stamp-number">2</span><span class="stamp-emoji">💮</span></div>
-        <div class="stamp-box" id="box-3"><span class="stamp-number">3</span><span class="stamp-emoji">💮</span></div>
-        <div class="stamp-box" id="box-4"><span class="stamp-number">4</span><span class="stamp-emoji">💮</span></div>
-        <div class="stamp-box" id="box-5"><span class="stamp-number">5</span><span class="stamp-emoji">💮</span></div>
-        <div class="stamp-box" id="box-6"><span class="stamp-number">6</span><span class="stamp-emoji">💮</span></div>
-        <div class="stamp-box" id="box-7"><span class="stamp-number">7</span><span class="stamp-emoji">💮</span></div>
-        <div class="stamp-box" id="box-8"><span class="stamp-number">8</span><span class="stamp-emoji">💮</span></div>
-        <div class="stamp-box" id="box-9"><span class="stamp-number">9</span><span class="stamp-emoji">💮</span></div>
-        <div class="stamp-box" id="box-10"><span class="stamp-number">10</span><span class="stamp-emoji">💮</span></div>
-        <div class="stamp-box" id="box-11"><span class="stamp-number">11</span><span class="stamp-emoji">💮</span></div>
-        <div class="stamp-box" id="box-12"><span class="stamp-number">12</span><span class="stamp-emoji">🌟</span></div>
+        <!-- Digit "1" (5 boxes, center column is col 2) -->
+        <div class="stamp-box prefilled" style="grid-area: 1 / 2 / 2 / 3;">🌟</div>
+        <div class="stamp-box empty" style="grid-area: 2 / 2 / 3 / 3;"></div>
+        <div class="stamp-box empty" style="grid-area: 3 / 2 / 4 / 3;"></div>
+        <div class="stamp-box empty" style="grid-area: 4 / 2 / 5 / 3;"></div>
+        <div class="stamp-box empty" style="grid-area: 5 / 2 / 6 / 3;"></div>
+
+        <!-- Digit "2" (11 boxes, columns 5, 6, 7) -->
+        <div class="stamp-box prefilled" style="grid-area: 1 / 5 / 2 / 6;">🌟</div>
+        <div class="stamp-box empty" style="grid-area: 1 / 6 / 2 / 7;"></div>
+        <div class="stamp-box empty" style="grid-area: 1 / 7 / 2 / 8;"></div>
+        <div class="stamp-box empty" style="grid-area: 2 / 7 / 3 / 8;"></div>
+        <div class="stamp-box empty" style="grid-area: 3 / 5 / 4 / 6;"></div>
+        <div class="stamp-box empty" style="grid-area: 3 / 6 / 4 / 7;"></div>
+        <div class="stamp-box empty" style="grid-area: 3 / 7 / 4 / 8;"></div>
+        <div class="stamp-box empty" style="grid-area: 4 / 5 / 5 / 6;"></div>
+        <div class="stamp-box empty" style="grid-area: 5 / 5 / 6 / 6;"></div>
+        <div class="stamp-box empty" style="grid-area: 5 / 6 / 6 / 7;"></div>
+        <div class="stamp-box empty" style="grid-area: 5 / 7 / 6 / 8;"></div>
+
+        <!-- Digit "0" (12 boxes, columns 9, 10, 11) -->
+        <div class="stamp-box prefilled" style="grid-area: 1 / 9 / 2 / 10;">🌟</div>
+        <div class="stamp-box empty" style="grid-area: 1 / 10 / 2 / 11;"></div>
+        <div class="stamp-box empty" style="grid-area: 1 / 11 / 2 / 12;"></div>
+        <div class="stamp-box empty" style="grid-area: 2 / 9 / 3 / 10;"></div>
+        <div class="stamp-box empty" style="grid-area: 2 / 11 / 3 / 12;"></div>
+        <div class="stamp-box empty" style="grid-area: 3 / 9 / 4 / 10;"></div>
+        <div class="stamp-box empty" style="grid-area: 3 / 11 / 4 / 12;"></div>
+        <div class="stamp-box empty" style="grid-area: 4 / 9 / 5 / 10;"></div>
+        <div class="stamp-box empty" style="grid-area: 4 / 11 / 5 / 12;"></div>
+        <div class="stamp-box empty" style="grid-area: 5 / 9 / 6 / 10;"></div>
+        <div class="stamp-box empty" style="grid-area: 5 / 10 / 6 / 11;"></div>
+        <div class="stamp-box empty" style="grid-area: 5 / 11 / 6 / 12;"></div>
     </div>
 
     <button id="reset-btn" class="action-btn" disabled>Redeem 兌換</button>
@@ -233,7 +247,15 @@
     </div>
 
     <script>
-        const STORAGE_KEY = 'ssgc_scanned_stamps';
+        const STORAGE_KEY = 'ssgc_scanned_stamps_120';
+        const TARGET_STAMPS = 23;
+        
+        // 26 Unique Emojis for the 26 different QR Codes around the school
+        const distinctEmojis = [
+            '📚','🎓','🏫','✏️','🏅','🎨','🎵','⚽','💻','🔬','🌿','🎭','🏆',
+            '🚀','💡','🌍','🧩','🎸','🏀','🍎','🌈','🌻','🎈','🎉','💎','🕰️'
+        ];
+
         const congratsBanner = document.getElementById('congrats-banner');
         const resetBtn = document.getElementById('reset-btn');
         const progressText = document.getElementById('progress-text');
@@ -241,7 +263,6 @@
         const modalCancel = document.getElementById('modal-cancel');
         const modalConfirm = document.getElementById('modal-confirm');
 
-        // Retrieve collected unique stamp IDs array from Local Storage
         function getCollectedStamps() {
             try {
                 return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
@@ -250,31 +271,32 @@
             }
         }
 
-        // Save updated stamps list to Local Storage
         function saveCollectedStamps(stampsArray) {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(stampsArray));
         }
 
-        // Update the display for the 12 boxes and progress tracker
         function updateUI() {
             const collectedStamps = getCollectedStamps();
-            const count = Math.min(collectedStamps.length, 12);
+            const count = collectedStamps.length;
 
-            // Light up boxes based on count
-            for (let i = 1; i <= 12; i++) {
-                const box = document.getElementById(`box-${i}`);
-                if (i <= count) {
+            // Get all the empty slots to fill them in order
+            const emptyBoxes = document.querySelectorAll('.stamp-box.empty');
+
+            emptyBoxes.forEach((box, index) => {
+                if (index < count) {
                     box.classList.add('unlocked');
+                    // Uses the sequential index to give them a unique emoji from the array
+                    box.innerText = distinctEmojis[index % distinctEmojis.length];
                 } else {
                     box.classList.remove('unlocked');
+                    box.innerText = '';
                 }
-            }
+            });
 
-            // Update Progress Counter Text
-            progressText.innerText = `Stamps Collected 印花進度: ${count} / 12`;
+            // Update Progress text, cap display at TARGET_STAMPS so it doesn't say 24/23
+            progressText.innerText = `Stamps Collected 印花進度: ${Math.min(count, TARGET_STAMPS)} / ${TARGET_STAMPS}`;
 
-            // Check if 12 stamps are reached
-            if (count >= 12) {
+            if (count >= TARGET_STAMPS) {
                 congratsBanner.style.display = 'block';
                 resetBtn.disabled = false;
             } else {
@@ -283,22 +305,21 @@
             }
         }
 
-        // Check URL for scanned stamp parameter (e.g., ?stamp=STAMP_01 or ?stamp=ZONE_CHEM)
+        // Check URL for scanned stamp
         const urlParams = new URLSearchParams(window.location.search);
         const scannedStamp = urlParams.get('stamp');
 
         if (scannedStamp) {
             let collectedStamps = getCollectedStamps();
-            // Store unique stamp IDs
-            if (!collectedStamps.includes(scannedStamp)) {
+            
+            // Limit collection to a maximum of 25 (the number of empty boxes in the 120 shape)
+            if (!collectedStamps.includes(scannedStamp) && collectedStamps.length < 25) {
                 collectedStamps.push(scannedStamp);
                 saveCollectedStamps(collectedStamps);
             }
-            // Clean the URL so refreshing doesn't duplicate logic
             window.history.replaceState(null, '', window.location.pathname);
         }
 
-        // Initial UI render on page load
         updateUI();
 
         // Modal triggers
