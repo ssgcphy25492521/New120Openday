@@ -38,65 +38,60 @@
         sup {
             font-size: 0.6em;
         }
-        .warning-text {
-            font-size: 13px;
-            color: #dc3545;
-            font-weight: bold;
-            margin: 5px 0 15px 0;
-            line-height: 1.4;
-            text-align: center;
-            max-width: 90%;
-        }
         
-        /* Restored Progress Counter */
         .progress-counter {
             font-size: 16px;
             font-weight: bold;
             color: var(--dark-blue);
-            margin: 0 0 15px 0;
+            margin: 5px 0 15px 0;
             background: #ffffff;
             padding: 8px 18px;
             border-radius: 20px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
-        /* Grid with 0 gap so boxes touch, forming solid pixel art */
+        /* Optimized 9-column grid allows for much larger boxes */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(11, 28px);
-            grid-template-rows: repeat(5, 28px);
+            grid-template-columns: repeat(9, 35px);
+            grid-template-rows: repeat(5, 35px);
             gap: 0; 
             margin-top: 10px;
             justify-content: center;
-            /* Adds a slight shadow behind the whole 120 shape */
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
         }
         @media(min-width: 400px) {
             .grid-container {
-                /* Larger boxes on bigger screens */
-                grid-template-columns: repeat(11, 35px);
-                grid-template-rows: repeat(5, 35px);
+                grid-template-columns: repeat(9, 44px);
+                grid-template-rows: repeat(5, 44px);
+            }
+        }
+        @media(min-width: 600px) {
+            .grid-container {
+                grid-template-columns: repeat(9, 55px);
+                grid-template-rows: repeat(5, 55px);
             }
         }
 
         .stamp-box {
             background: var(--dark-blue);
-            /* Thin border matches background to create grid lines */
             border: 1px solid var(--pale-blue); 
             box-sizing: border-box;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            font-size: 15px;
+            font-size: 18px;
         }
         @media(min-width: 400px) {
-            .stamp-box { font-size: 18px; }
+            .stamp-box { font-size: 24px; }
+        }
+        @media(min-width: 600px) {
+            .stamp-box { font-size: 32px; }
         }
 
         .stamp-box.unlocked {
             background: linear-gradient(135deg, #ffe875, var(--gold));
-            /* Inner shadow looks better than scale when boxes touch */
             box-shadow: inset 0 0 8px rgba(255, 120, 0, 0.4);
             color: #000;
         }
@@ -200,12 +195,6 @@
         <p style="font-size: 15px; margin: 12px 0 3px 0; font-weight: bold; color: #003366;">Digital Reward Card 電子印花收集卡</p>
     </div>
 
-    <!-- Added crucial warning for users -->
-    <div class="warning-text">
-        ⚠️ Please use the SAME device and browser for every scan!<br>
-        請使用同一設備及瀏覽器掃描所有二維碼！
-    </div>
-
     <div class="progress-counter" id="progress-text">
         Stamps Collected 印花進度: 0 / 25
     </div>
@@ -216,39 +205,39 @@
     </div>
 
     <div class="grid-container">
-        <!-- Digit "1" (5 boxes, center column is col 2) -->
-        <div class="stamp-box prefilled" style="grid-area: 1 / 2 / 2 / 3;">🌟</div>
-        <div class="stamp-box empty" style="grid-area: 2 / 2 / 3 / 3;"></div>
-        <div class="stamp-box empty" style="grid-area: 3 / 2 / 4 / 3;"></div>
-        <div class="stamp-box empty" style="grid-area: 4 / 2 / 5 / 3;"></div>
-        <div class="stamp-box empty" style="grid-area: 5 / 2 / 6 / 3;"></div>
+        <!-- Digit "1" (5 boxes, in column 1) -->
+        <div class="stamp-box prefilled" style="grid-area: 1 / 1 / 2 / 2;">🌟</div>
+        <div class="stamp-box empty" style="grid-area: 2 / 1 / 3 / 2;"></div>
+        <div class="stamp-box empty" style="grid-area: 3 / 1 / 4 / 2;"></div>
+        <div class="stamp-box empty" style="grid-area: 4 / 1 / 5 / 2;"></div>
+        <div class="stamp-box empty" style="grid-area: 5 / 1 / 6 / 2;"></div>
 
-        <!-- Digit "2" (11 boxes, columns 5, 6, 7) -->
-        <div class="stamp-box prefilled" style="grid-area: 1 / 5 / 2 / 6;">🌟</div>
-        <div class="stamp-box empty" style="grid-area: 1 / 6 / 2 / 7;"></div>
-        <div class="stamp-box empty" style="grid-area: 1 / 7 / 2 / 8;"></div>
-        <div class="stamp-box empty" style="grid-area: 2 / 7 / 3 / 8;"></div>
+        <!-- Digit "2" (11 boxes, in columns 3, 4, 5) -->
+        <div class="stamp-box prefilled" style="grid-area: 1 / 3 / 2 / 4;">🌟</div>
+        <div class="stamp-box empty" style="grid-area: 1 / 4 / 2 / 5;"></div>
+        <div class="stamp-box empty" style="grid-area: 1 / 5 / 2 / 6;"></div>
+        <div class="stamp-box empty" style="grid-area: 2 / 5 / 3 / 6;"></div>
+        <div class="stamp-box empty" style="grid-area: 3 / 3 / 4 / 4;"></div>
+        <div class="stamp-box empty" style="grid-area: 3 / 4 / 4 / 5;"></div>
         <div class="stamp-box empty" style="grid-area: 3 / 5 / 4 / 6;"></div>
-        <div class="stamp-box empty" style="grid-area: 3 / 6 / 4 / 7;"></div>
-        <div class="stamp-box empty" style="grid-area: 3 / 7 / 4 / 8;"></div>
-        <div class="stamp-box empty" style="grid-area: 4 / 5 / 5 / 6;"></div>
+        <div class="stamp-box empty" style="grid-area: 4 / 3 / 5 / 4;"></div>
+        <div class="stamp-box empty" style="grid-area: 5 / 3 / 6 / 4;"></div>
+        <div class="stamp-box empty" style="grid-area: 5 / 4 / 6 / 5;"></div>
         <div class="stamp-box empty" style="grid-area: 5 / 5 / 6 / 6;"></div>
-        <div class="stamp-box empty" style="grid-area: 5 / 6 / 6 / 7;"></div>
-        <div class="stamp-box empty" style="grid-area: 5 / 7 / 6 / 8;"></div>
 
-        <!-- Digit "0" (12 boxes, columns 9, 10, 11) -->
-        <div class="stamp-box prefilled" style="grid-area: 1 / 9 / 2 / 10;">🌟</div>
-        <div class="stamp-box empty" style="grid-area: 1 / 10 / 2 / 11;"></div>
-        <div class="stamp-box empty" style="grid-area: 1 / 11 / 2 / 12;"></div>
+        <!-- Digit "0" (12 boxes, in columns 7, 8, 9) -->
+        <div class="stamp-box prefilled" style="grid-area: 1 / 7 / 2 / 8;">🌟</div>
+        <div class="stamp-box empty" style="grid-area: 1 / 8 / 2 / 9;"></div>
+        <div class="stamp-box empty" style="grid-area: 1 / 9 / 2 / 10;"></div>
+        <div class="stamp-box empty" style="grid-area: 2 / 7 / 3 / 8;"></div>
         <div class="stamp-box empty" style="grid-area: 2 / 9 / 3 / 10;"></div>
-        <div class="stamp-box empty" style="grid-area: 2 / 11 / 3 / 12;"></div>
+        <div class="stamp-box empty" style="grid-area: 3 / 7 / 4 / 8;"></div>
         <div class="stamp-box empty" style="grid-area: 3 / 9 / 4 / 10;"></div>
-        <div class="stamp-box empty" style="grid-area: 3 / 11 / 4 / 12;"></div>
+        <div class="stamp-box empty" style="grid-area: 4 / 7 / 5 / 8;"></div>
         <div class="stamp-box empty" style="grid-area: 4 / 9 / 5 / 10;"></div>
-        <div class="stamp-box empty" style="grid-area: 4 / 11 / 5 / 12;"></div>
+        <div class="stamp-box empty" style="grid-area: 5 / 7 / 6 / 8;"></div>
+        <div class="stamp-box empty" style="grid-area: 5 / 8 / 6 / 9;"></div>
         <div class="stamp-box empty" style="grid-area: 5 / 9 / 6 / 10;"></div>
-        <div class="stamp-box empty" style="grid-area: 5 / 10 / 6 / 11;"></div>
-        <div class="stamp-box empty" style="grid-area: 5 / 11 / 6 / 12;"></div>
     </div>
 
     <button id="reset-btn" class="action-btn" disabled>Redeem 兌換</button>
@@ -265,7 +254,7 @@
 
     <script>
         const STORAGE_KEY = 'ssgc_scanned_stamps_120';
-        const TARGET_STAMPS = 25; // Updated to 25
+        const TARGET_STAMPS = 25; 
         
         const distinctEmojis = [
             '📚','🎓','🏫','✏️','🏅','🎨','🎵','⚽','💻','🔬','🌿','🎭','🏆',
@@ -307,7 +296,6 @@
                 }
             });
 
-            // Update Progress text dynamically
             progressText.innerText = `Stamps Collected 印花進度: ${Math.min(count, TARGET_STAMPS)} / ${TARGET_STAMPS}`;
 
             if (count >= TARGET_STAMPS) {
@@ -325,7 +313,6 @@
         if (scannedStamp) {
             let collectedStamps = getCollectedStamps();
             
-            // Limit to max 25 stamps
             if (!collectedStamps.includes(scannedStamp) && collectedStamps.length < TARGET_STAMPS) {
                 collectedStamps.push(scannedStamp);
                 saveCollectedStamps(collectedStamps);
