@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSGC 120th Anniversary Open Day Stamp Card</title>
+    <style>
+        :root {
+            --pale-blue: #e6f2ff;
+            --gold: #ffd700;
+            --dark-blue: #003366;
+        }
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--pale-blue);
+            color: var(--dark-blue);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            max-width: 600px;
+        }
+        .school-badge {
+            width: 90px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        h1 {
+            font-size: 20px;
+            margin: 5px 0;
+            line-height: 1.4;
+        }
+        sup {
+            font-size: 0.6em;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 12px;
+            width: 100%;
+            max-width: 600px;
+            justify-items: center;
+        }
+        .zone-card {
+            background: var(--dark-blue);
+            border-radius: 12px;
+            padding: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #002244;
+        }
+        .stamps-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+        .stamp {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            border: 2px dashed #88aacc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .stamp .stamp-emoji {
+            display: none;
+        }
+        .stamp.unlocked {
+            border-style: solid;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, #ffe875, var(--gold));
+            border-color: #d4af37;
+            color: #5c4308;
+        }
+        .stamp.unlocked .stamp-emoji {
+            display: block;
+        }
+        .congratulations {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+            max-width: 600px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #c3e6cb;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .action-btn {
+            margin-top: 25px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .action-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        .action-btn:not(:disabled) {
+            background-color: #28a745;
+        }
+        .action-btn:not(:disabled):hover {
+            background-color: #218838;
+        }
+
+        /* Custom Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-box {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 300px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .modal-text {
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.5;
+            color: var(--dark-blue);
+        }
+        .modal-buttons {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+        }
+        .btn-cancel {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .btn-confirm {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img class="school-badge" src="badge.png" alt="St. Stephen's Girls' College Badge" onerror="this.style.display='none'">
+        <h1>St. Stephen’s Girls’ College</h1>
+        <h1>120<sup>th</sup> Anniversary Open Day</h1>
+        <h1>聖士提反女子中學</h1>
+        <h1>一百二十周年校慶開放日</h1>
+        <p style="font-size: 16px; margin: 15px 0 5px 0; font-weight: bold; color: #003366;">Digital Reward Card</p>
+        <p style="font-size: 16px; margin: 5px 0 0 0; font-weight: bold; color: #003366;">電子印花收集卡</p>
+    </div>
+
+    <div id="congrats-banner" class="congratulations">
+        🎉🎉 Congratulations! You have collected 12 stamps! Please proceed to Rooms M009 / M010 in the June Li Building to redeem your souvenirs.<br><br>
+        恭喜您！您已集齊12個印花！請前往李余愛喜大樓 M009/M010 室領取紀念品。🎉🎉
+    </div>
+
+    <div class="grid-container">
+        <!-- 26 Stamp Cards -->
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_01"><span class="stamp-emoji">📜</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_02"><span class="stamp-emoji">🎭</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_03"><span class="stamp-emoji">🏛️</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_04"><span class="stamp-emoji">🌍</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_05"><span class="stamp-emoji">🔤</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_06"><span class="stamp-emoji">🎵</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_07"><span class="stamp-emoji">🌟</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_08"><span class="stamp-emoji">📚</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_09"><span class="stamp-emoji">⛪</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_10"><span class="stamp-emoji">📊</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_11"><span class="stamp-emoji">🌿</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_12"><span class="stamp-emoji">🧪</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_13"><span class="stamp-emoji">💻</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_14"><span class="stamp-emoji">📐</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_15"><span class="stamp-emoji">⚛️</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_16"><span class="stamp-emoji">🚀</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_17"><span class="stamp-emoji">🛍️</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_18"><span class="stamp-emoji">💬</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_19"><span class="stamp-emoji">🤝</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_20"><span class="stamp-emoji">🏋️‍♀️</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_21"><span class="stamp-emoji">✉️</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_22"><span class="stamp-emoji">❤️</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_23"><span class="stamp-emoji">🎨</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_24"><span class="stamp-emoji">✈️</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_25"><span class="stamp-emoji">🧗‍♀️</span></div></div></div>
+        <div class="zone-card"><div class="stamps-container"><div class="stamp" id="STAMP_26"><span class="stamp-emoji">🌱</span></div></div></div>
+    </div>
+
+    <button id="reset-btn" class="action-btn" disabled>Redeem 兌換</button>
+
+    <div id="confirm-modal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-text">I confirm that I have redeemed the souvenir and agree to reset the reward card.<br><br>我確認我已兌換紀念品並同意重設印花收集卡。</div>
+            <div class="modal-buttons">
+                <button id="modal-cancel" class="btn-cancel">Cancel / 取消</button>
+                <button id="modal-confirm" class="btn-confirm">Confirm / 確認</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const stamps = document.querySelectorAll('.stamp');
+        const congratsBanner = document.getElementById('congrats-banner');
+        const resetBtn = document.getElementById('reset-btn');
+        const modal = document.getElementById('confirm-modal');
+        const modalCancel = document.getElementById('modal-cancel');
+        const modalConfirm = document.getElementById('modal-confirm');
+
+        // Function to check if at least 12 stamps are collected
+        function checkCompletion() {
+            const unlockedStamps = document.querySelectorAll('.stamp.unlocked');
+            if (unlockedStamps.length >= 12) {
+                congratsBanner.style.display = 'block';
+                congratsBanner.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                congratsBanner.style.display = 'none';
+            }
+            
+            // Enable redeem button if at least 12 stamps are unlocked
+            resetBtn.disabled = unlockedStamps.length < 12;
+        }
+
+        // Load saved stamps from local storage on launch
+        stamps.forEach(stamp => {
+            const stampId = stamp.id;
+            if (localStorage.getItem(stampId) === 'unlocked') {
+                stamp.classList.add('unlocked');
+            }
+        });
+
+        // Check URL for scanned stamp parameter (e.g., ?stamp=STAMP_01)
+        const urlParams = new URLSearchParams(window.location.search);
+        const scannedStamp = urlParams.get('stamp');
+
+        if (scannedStamp) {
+            const targetStamp = document.getElementById(scannedStamp);
+            if (targetStamp) {
+                targetStamp.classList.add('unlocked');
+                localStorage.setItem(scannedStamp, 'unlocked');
+                
+                // Clean the URL so refreshing doesn't keep the parameter
+                window.history.replaceState(null, '', window.location.pathname);
+            }
+        }
+
+        // Initialize display state
+        checkCompletion();
+
+        // Modal triggers
+        resetBtn.addEventListener('click', () => modal.style.display = 'flex');
+        modalCancel.addEventListener('click', () => modal.style.display = 'none');
+        
+        modalConfirm.addEventListener('click', () => {
+            stamps.forEach(stamp => {
+                stamp.classList.remove('unlocked');
+                localStorage.removeItem(stamp.id);
+            });
+            modal.style.display = 'none';
+            checkCompletion();
+        });
+    </script>
+</body>
+</html>
