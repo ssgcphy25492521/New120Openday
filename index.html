@@ -256,10 +256,34 @@
         const STORAGE_KEY = 'ssgc_scanned_stamps_120';
         const TARGET_STAMPS = 20; // Updated to exactly 20
         
-        const distinctEmojis = [
-            '📜','🎭','🏛️','🌍','🔤','🎵','👍','📚','⛪','📊','🌿','🧪','💻',
-            '📐','⚛️','🚀','🛍️','💬','🤝','🏋️‍♀️','✉️','🫶🏻','🎨','✈️','🧗‍♀️','🌴'
-        ];
+        const stampEmojis = {
+    "1": "📜",
+    "2": "🎭",
+    "3": "🏛️",
+    "4": "🌍",
+    "5": "🔤",
+    "6": "🎵",
+    "7": "👍",
+    "8": "📚",
+    "9": "⛪",
+    "10": "📊",
+    "11": "🌿",
+    "12": "🧪",
+    "13": "💻",
+    "14": "📐",
+    "15": "⚛️",
+    "16": "🚀",
+    "17": "🛍️",
+    "18": "💬",
+    "19": "🤝",
+    "20": "🏋️‍♀️",
+    "21": "✉️",
+    "22": "🫶🏻",
+    "23": "🎨",
+    "24": "✈️",
+    "25": "🧗‍♀️",
+    "26": "🌴"
+};
 
         const congratsBanner = document.getElementById('congrats-banner');
         const resetBtn = document.getElementById('reset-btn');
@@ -280,38 +304,38 @@
             localStorage.setItem(STORAGE_KEY, JSON.stringify(stampsArray));
         }
 
-        function updateUI() {
-            const collectedStamps = getCollectedStamps();
-            const count = collectedStamps.length;
+function updateUI() {
+    const collectedStamps = getCollectedStamps();
+    const count = collectedStamps.length;
 
-            const emptyBoxes = document.querySelectorAll('.stamp-box.empty');
+    const emptyBoxes = document.querySelectorAll('.stamp-box.empty');
 
-            emptyBoxes.forEach((box, index) => {
-                if (index < count) {
-                    box.classList.add('unlocked');
-                    const stampId = collectedStamps[index];
-let stampNumber = 0;
-for (let i = 0; i < stampId.length; i++) {
-    stampNumber += stampId.charCodeAt(i);
-}
-box.innerText = distinctEmojis[stampNumber % distinctEmojis.length];
-                } else {
-                    box.classList.remove('unlocked');
-                    box.innerText = '';
-                }
-            });
-
-            progressText.innerText = `Stickers Collected 印花進度: ${Math.min(count, TARGET_STAMPS)} / ${TARGET_STAMPS}`;
-
-            if (count >= TARGET_STAMPS) {
-                congratsBanner.style.display = 'block';
-                resetBtn.disabled = false;
-            } else {
-                congratsBanner.style.display = 'none';
-                resetBtn.disabled = true;
-            }
+    emptyBoxes.forEach((box, index) => {
+        if (index < count) {
+            box.classList.add('unlocked');
+            
+            const stampId = collectedStamps[index];
+            
+            // This replaces the math loop! 
+            // It looks up the exact emoji from your stampEmojis list.
+            box.innerText = stampEmojis[stampId] || "🌟"; 
+            
+        } else {
+            box.classList.remove('unlocked');
+            box.innerText = '';
         }
+    });
 
+    progressText.innerText = `Stickers Collected 印花進度: ${Math.min(count, TARGET_STAMPS)} / ${TARGET_STAMPS}`;
+
+    if (count >= TARGET_STAMPS) {
+        congratsBanner.style.display = 'block';
+        resetBtn.disabled = false;
+    } else {
+        congratsBanner.style.display = 'none';
+        resetBtn.disabled = true;
+    }
+}
         const urlParams = new URLSearchParams(window.location.search);
         const scannedStamp = urlParams.get('stamp');
 
