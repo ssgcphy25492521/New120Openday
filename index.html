@@ -289,7 +289,12 @@
             emptyBoxes.forEach((box, index) => {
                 if (index < count) {
                     box.classList.add('unlocked');
-                    box.innerText = distinctEmojis[index % distinctEmojis.length];
+                    const stampId = collectedStamps[index];
+let stampNumber = 0;
+for (let i = 0; i < stampId.length; i++) {
+    stampNumber += stampId.charCodeAt(i);
+}
+box.innerText = distinctEmojis[stampNumber % distinctEmojis.length];
                 } else {
                     box.classList.remove('unlocked');
                     box.innerText = '';
