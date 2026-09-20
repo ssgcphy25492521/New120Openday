@@ -318,7 +318,7 @@ function updateUI() {
             
             // This replaces the math loop! 
             // It looks up the exact emoji from your stampEmojis list.
-            box.innerText = stampEmojis[stampId] || "🌟"; 
+            box.innerText = stampEmojis[stampId] || stampId; 
             
         } else {
             box.classList.remove('unlocked');
